@@ -6,6 +6,7 @@ prefix: PrimesSkyBlock
 authors: [ nasir_idrishi ]
 description: Primegames cross plateform skyblock plugin
 website: https://primegames.net
+load: POSTWORLD
 softdepend:
   - HolographicDisplays
 depend:
