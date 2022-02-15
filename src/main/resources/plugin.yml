@@ -1,0 +1,14 @@
+name: PrimesSkyBlock
+version: '${project.version}'
+main: net.primegames.skyblock.SkyBlock
+api-version: 1.17
+prefix: PrimesSkyBlock
+authors: [ nasir_idrishi ]
+description: Primegames cross plateform skyblock plugin
+website: https://primegames.net
+softdepend:
+  - HolographicDisplays
+depend:
+  - LuckPerms
+  - Vault
+  - Essentials
