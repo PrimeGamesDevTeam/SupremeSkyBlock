@@ -33,8 +33,24 @@ public class ClassicSettings extends Settings {
     }
 
     @Override
-    public boolean onVoteClaim(Player player, VoteSite voteSite) {
+    public void onVoteClaim(Player player, VoteSite voteSite) {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "crazycrate give physical vote 1 " + player.getName());
-        return true;
+    }
+
+    @Override
+    public void onVoteParty() {
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "crazycrate give physical rare 1 " + player.getName());
+        });
+    }
+
+    @Override
+    public Location votePartHoloLocation() {
+        return new Location(Bukkit.getWorld(getLobbyWorldName()), -6.504, 100.200, -5.504);
+    }
+
+    @Override
+    public int votePartyCount() {
+        return 20;
     }
 }
