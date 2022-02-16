@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.primegames.components.ComponentManager;
+import net.primegames.components.store.StoreComponent;
 import net.primegames.components.vote.VoteComponent;
 import net.primegames.plugin.PrimePlugin;
 import net.primegames.skyblock.listener.SkyBlockGroupListener;
@@ -12,6 +13,7 @@ import net.primegames.skyblock.settings.preset.ClassicSettings;
 import org.bukkit.plugin.PluginManager;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public final class SkyBlock extends PrimePlugin {
 
@@ -47,6 +49,11 @@ public final class SkyBlock extends PrimePlugin {
         try {
             componentManager.register(new VoteComponent(this));
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            componentManager.register(new StoreComponent(this));
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
