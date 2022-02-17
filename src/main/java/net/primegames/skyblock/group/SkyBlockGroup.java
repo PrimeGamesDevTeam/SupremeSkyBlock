@@ -12,6 +12,7 @@ import net.luckperms.api.util.Tristate;
 import net.primegames.groups.GroupTier;
 import net.primegames.skyblock.SkyBlock;
 import net.primegames.utils.LoggerUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -104,26 +105,12 @@ public enum SkyBlockGroup {
         LuckPerms luckPerms = SkyBlock.getInstance().getLuckPerms();
         User user = luckPerms.getUserManager().getUser(player.getUniqueId());
         if (user != null) {
-            user.getNodes().clear();
             for (SkyBlockGroup factionsGroup : factionsGroups) {
                 InheritanceNode node = InheritanceNode.builder(factionsGroup.getGroup().getName()).value(true).build();
-                if (user.data().contains(node, NodeEqualityPredicate.EXACT).equals(Tristate.FALSE) || user.data().contains(node, NodeEqualityPredicate.EXACT).equals(Tristate.UNDEFINED)) {
-                    if (user.data().add(node) == DataMutateResult.SUCCESS) {
-                        LoggerUtils.debug("Added factions group " + factionsGroup.getGroup().getName() + " to " + player.getName());
-                    } else {
-                        LoggerUtils.error("Failed to add factions group " + factionsGroup.getGroup().getName() + " to " + player.getName());
-                    }
+                if (!user.getNodes().contains(node)) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent add " + factionsGroup.getGroup().getName());
                 }
             }
-            SkyBlockGroup finalGroup = SkyBlockGroup.getHighestPriority(factionsGroups);
-            if(user.getPrimaryGroup().equals(finalGroup.getGroup().getName())) {
-                return;
-            }else if (user.setPrimaryGroup(finalGroup.getGroup().getName()) == DataMutateResult.SUCCESS) {
-                LoggerUtils.success("Set " + player.getName() + "'s primary group to " + finalGroup.getGroup().getName());
-            } else {
-                LoggerUtils.error("Failed to set " + player.getName() + "'s primary group to " + finalGroup.getGroup().getName());
-            }
-            luckPerms.getUserManager().saveUser(user);
         } else {
             LoggerUtils.error("Failed to get LuckPerms User for " + player.getName());
         }
