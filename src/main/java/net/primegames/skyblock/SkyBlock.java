@@ -3,10 +3,12 @@ package net.primegames.skyblock;
 import lombok.Getter;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.primegames.commands.BedrockPlayerCommandHandler;
 import net.primegames.components.ComponentManager;
 import net.primegames.components.store.StoreComponent;
 import net.primegames.components.vote.VoteComponent;
 import net.primegames.plugin.PrimePlugin;
+import net.primegames.skyblock.listener.SkyBlockCommandListener;
 import net.primegames.skyblock.listener.SkyBlockGroupListener;
 import net.primegames.skyblock.settings.Settings;
 import net.primegames.skyblock.settings.preset.ClassicSettings;
@@ -42,6 +44,7 @@ public final class SkyBlock extends PrimePlugin {
     @Override
     protected void registerListeners(PluginManager pluginManager) {
         pluginManager.registerEvents(new SkyBlockGroupListener(), this);
+        pluginManager.registerEvents(new SkyBlockCommandListener(), this);
     }
 
     @Override
